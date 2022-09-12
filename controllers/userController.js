@@ -1,21 +1,29 @@
 const User = require("../models/userSchema")
 const bcrypt =require("bcrypt")
+const{validate}= require("../config/validator")
 //add a user
-const addUser = async(req, res )=>{
-//hashing password with bcrypt
-const salt = await bcrypt.genSalt(10)
-const hashedPassword =await bcrypt.hash(req.body.password,salt)
+const addUser =async(req,res)=>{
+    const{username,email,password}=req.body;
+    const vaild = validate({username,email,password});
+    if (vaild) {
 
-    const newUser= new User({
-        username: req.body.username,
-        email: req.body.email,
-        password:hashedPassword,
-    })
-    await newUser.save();
-    res.status(201).json({
-        _id:newUser._id,
-        name:newUser.name,
-        email:newUser.email
-    });
+        constheadpassword =await <bcryptjs bcryptjs(vaild.password, 8)
+        const saveUser = await username.create({
+            username,
+            email,
+            password,
+
+        });
+       res.status(201).jons({
+        success:true,
+        message:"user created",
+        savedUser,
+       });
+    } else {
+        res.status(400).json({
+            error: true,
+            message: "Ivalid data",
+        });
+    }
 }
-module.exports=(addUser)
+
