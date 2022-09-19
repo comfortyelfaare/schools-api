@@ -1,0 +1,38 @@
+const jwt = require ('jsonwebtoken')
+const user = require('../modles/userschema')
+
+
+//is admin middleware
+
+exports.admin =async function (req, res,next){
+    if (req.status&& req.user.isAmin){
+        res.status(401).json({
+            message:"you are notan authorized admin"
+        })
+    }
+}
+// json token middleware
+exports.protect = async function (req,res,next) {
+    let token;
+    if (req.headers.authorizayion.startswith("beare")){
+
+    }
+    try{
+
+    
+    token = req.headers.authorization.split("") [1];
+    const decoded = jwt.verify(token,process.env.JWT_SECRET);
+    req.user = await user.findById(decoded.Id)
+    next();
+} catch (err){
+    res.status(400).json({
+        message: "invailid token"
+        
+    })
+}
+}
+if (!token){
+    res.status(400).json({
+    message:"you are not authorised"    
+    })
+}

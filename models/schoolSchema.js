@@ -1,38 +1,43 @@
 const mongoose = require("mongoose")
 
-const schoolSchema = new mongoose.Schema({
-    name:{
+const schoolSchema = mongoose.Schema({
+    schoolname:{
         type:String,
-        required:true
+        required:true,
+        unique:true
     },
-    level:{
+    location: {
         type:String,
-        required:true
+        require:true
+
     },
     category:{
         type:String,
-        required:true
+        require:true
     },
-    numOfstudents:{
+    facilities:{
+        type:Array,
+        require:true,
+        
+
+    },
+    numofstudent:{
         type:Number,
-        required:true
-    },
-    location:{
-        type:String,
-        required:true
+        require:true
     },
     Address:{
         gps:String,
+        box:String
     },
+
+
     contact:{
         phone:String,
-        fax:String,
         email:String
     }
-},{
-    timestamps:true
-}
-)
+}, {
 
-const school =mongoose.model("school", schoolSchema)
-module.exports= school;
+    timestamp:true
+})
+const school = mongoose.model("school", schoolSchema)
+module.exports=school

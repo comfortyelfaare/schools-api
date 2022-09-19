@@ -1,23 +1,29 @@
-const express = require("express");
-const morgan = require("morgan");
-require ("dotenv").config();
-const connectDB= require("./config/connectDB")
-const userRoutes =require("./routes/userRouter")
+const express = require('express')
+const dotenv = require('dotenv')
+const connectDB = require("./config/connectDB")
+const userRoute = require("./routes/userRoute")
+const schoolRoute =require("./routes/schoolRoute")
+const morgan = require("morgan")
+
+
+dotenv.config();
 const app = express();
-connectDB()
+connectDB();
+
 //middlewares
 app.use(express.json())
-app.use(morgan ("dev"))
-app.use('./users', userRoutes)
+app.use("/api/users",userRoute)
+app.use("/api/schools", schoolRoute)
 
-//home route
-app.get("/", (req, res)=>{
-    res.json("<H1>ELCOME TO OUR SCHOOL API</H1>")
+app.use(morgan("dev"))
 
-})
-const PORT=process.env.PORT||6000
-
-app.listen(PORT, ()=>{
-console.log("server is active")
+app.get("/", (req, res) => {
+    res.send("welcome to our school portal")
 })
 
+
+const PORT = process.env.PORT || 9090;
+
+app.listen(PORT, () => {
+    console.log(`serving running on ${PORT}`);
+})
